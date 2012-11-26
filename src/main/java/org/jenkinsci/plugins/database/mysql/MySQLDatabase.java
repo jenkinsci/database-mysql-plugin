@@ -6,6 +6,8 @@ import hudson.Extension;
 import hudson.Util;
 import hudson.util.FormValidation;
 import hudson.util.Secret;
+import org.jenkinsci.plugins.database.AbstractRemoteDatabase;
+import org.jenkinsci.plugins.database.AbstractRemoteDatabaseDescriptor;
 import org.jenkinsci.plugins.database.BasicDataSource2;
 import org.jenkinsci.plugins.database.Database;
 import org.jenkinsci.plugins.database.DatabaseDescriptor;
@@ -24,52 +26,24 @@ import java.util.Set;
 /**
  * @author Kohsuke Kawaguchi
  */
-public class MySQLDatabase extends Database {
-    /**
-     * Host name + optional port (in the "host[:port]" format)
-     */
-    public final String hostname;
-    public final String database;
-    public final String username;
-    public final Secret password;
-
-    public final String properties;
-
-    private transient DataSource source;
-
+public class MySQLDatabase extends AbstractRemoteDatabase {
     @DataBoundConstructor
     public MySQLDatabase(String hostname, String database, String username, Secret password, String properties) {
-        this.hostname = hostname;
-        this.database = database;
-        this.username = username;
-        this.password = password;
-        this.properties = properties;
+        super(hostname, database, username, password, properties);
     }
 
     @Override
-    public synchronized DataSource getDataSource() throws SQLException {
-        if (source==null) {
-            BasicDataSource2 fac = new BasicDataSource2();
-            fac.setDriverClass(Driver.class);
-            fac.setUrl("jdbc:mysql://" + hostname + '/' + database);
-            fac.setUsername(username);
-            fac.setPassword(Secret.toString(password));
+    protected Class<Driver> getDriverClass() {
+        return Driver.class;
+    }
 
-            try {
-                for (Map.Entry e : Util.loadProperties(Util.fixNull(properties)).entrySet()) {
-                    fac.addConnectionProperty(e.getKey().toString(), e.getValue().toString());
-                }
-            } catch (IOException e) {
-                throw new SQLException("Invalid properties",e);
-            }
-
-            source = fac.createDataSource();
-        }
-        return source;
+    @Override
+    protected String getJdbcUrl() {
+        return "jdbc:mysql://" + hostname + '/' + database;
     }
 
     @Extension
-    public static class DescriptorImpl extends DatabaseDescriptor {
+    public static class DescriptorImpl extends AbstractRemoteDatabaseDescriptor {
 
         private volatile Set<String> validPropertyNames;
 
@@ -95,25 +69,6 @@ public class MySQLDatabase extends Database {
             } catch (Throwable e) {
                 return FormValidation.warning(e,"Failed to validate the connection properties");
             }
-        }
-
-        public FormValidation doValidate(
-                @QueryParameter String hostname,
-                @QueryParameter String database,
-                @QueryParameter String username,
-                @QueryParameter String password,
-                @QueryParameter String properties) {
-
-            try {
-                DataSource ds = new MySQLDatabase(hostname, database, username, Secret.fromString(password), properties).getDataSource();
-                Connection con = ds.getConnection();
-                con.createStatement().execute("SELECT 1");
-                con.close();
-                return FormValidation.ok("OK");
-            } catch (SQLException e) {
-                return FormValidation.error(e,"Failed to connect to MySQL");
-            }
-
         }
     }
 }
