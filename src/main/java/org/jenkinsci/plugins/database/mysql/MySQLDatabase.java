@@ -8,17 +8,12 @@ import hudson.util.FormValidation;
 import hudson.util.Secret;
 import org.jenkinsci.plugins.database.AbstractRemoteDatabase;
 import org.jenkinsci.plugins.database.AbstractRemoteDatabaseDescriptor;
-import org.jenkinsci.plugins.database.BasicDataSource2;
-import org.jenkinsci.plugins.database.Database;
-import org.jenkinsci.plugins.database.DatabaseDescriptor;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -57,7 +52,8 @@ public class MySQLDatabase extends AbstractRemoteDatabase {
                 if (validPropertyNames==null) {
                     // this computation depends on the implementation details of MySQL JDBC connector
                     GroovyShell gs = new GroovyShell(getClass().getClassLoader());
-                    validPropertyNames = (Set<String>)gs.evaluate(new InputStreamReader(MySQLDatabase.class.getResourceAsStream("validate.groovy")));
+                    validPropertyNames = (Set<String>) gs.evaluate ( new InputStreamReader ( MySQLDatabase.class.getResourceAsStream ( "validate.groovy" ),
+                        Charset.forName ( "UTF-8" ) ) );
                 }
                 Properties props = Util.loadProperties(properties);
                 for (Map.Entry e : props.entrySet()) {
