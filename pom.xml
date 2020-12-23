@@ -8,14 +8,14 @@
   </parent>
 
   <artifactId>database-mysql</artifactId>
-  <version>1.4</version>
+  <version>${revision}${changelist}</version>
   <packaging>hpi</packaging>
   <name>MySQL Database Plugin</name>
 
   <url>https://github.com/jenkinsci/database-mysql-plugin</url>
 
   <properties>
-    <revision>1.4</revision>
+    <revision>1.5</revision>
     <changelist>-SNAPSHOT</changelist>
     <gitHubRepo>jenkinsci/database-mysql-plugin</gitHubRepo>
     <jenkins.version>2.235.1</jenkins.version>
@@ -61,6 +61,6 @@
     <connection>scm:git:git://github.com/${gitHubRepo}.git</connection>
     <developerConnection>scm:git:git@github.com:${gitHubRepo}.git</developerConnection>
     <url>http://github.com/${gitHubRepo}</url>
-    <tag>database-mysql-1.4</tag>
+    <tag>${scmTag}</tag>
   </scm>
 </project>
