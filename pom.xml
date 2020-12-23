@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>database-mysql</artifactId>
-  <version>${revision}${changelist}</version>
+  <version>1.4</version>
   <packaging>hpi</packaging>
   <name>MySQL Database Plugin</name>
 
@@ -61,6 +61,6 @@
     <connection>scm:git:git://github.com/${gitHubRepo}.git</connection>
     <developerConnection>scm:git:git@github.com:${gitHubRepo}.git</developerConnection>
     <url>http://github.com/${gitHubRepo}</url>
-    <tag>${scmTag}</tag>
+    <tag>database-mysql-1.4</tag>
   </scm>
 </project>
