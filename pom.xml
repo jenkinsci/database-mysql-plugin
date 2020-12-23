@@ -3,39 +3,43 @@
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>3.9</version>
+    <version>4.15</version>
     <relativePath />
   </parent>
 
-  <groupId>org.jenkins-ci.plugins</groupId>
   <artifactId>database-mysql</artifactId>
-  <version>1.4</version>
+  <version>${revision}${changelist}</version>
   <packaging>hpi</packaging>
   <name>MySQL Database Plugin</name>
 
-  <url>https://wiki.jenkins-ci.org/display/JENKINS/MySQL+Database+Plugin</url>
+  <url>https://github.com/jenkinsci/database-mysql-plugin</url>
 
   <properties>
+    <revision>1.4</revision>
+    <changelist>-SNAPSHOT</changelist>
+    <gitHubRepo>jenkinsci/database-mysql-plugin</gitHubRepo>
+    <jenkins.version>2.235.1</jenkins.version>
     <java.level>8</java.level>
+    <database.version>1.7</database.version>
   </properties>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
 
   <dependencies>
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.21</version>
+      <version>8.0.22</version>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>database</artifactId>
-      <version>1.1</version>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>database</artifactId>
-      <classifier>tests</classifier>
-      <version>1.1</version>
-      <scope>test</scope>
+      <version>${database.version}</version>
     </dependency>
   </dependencies>
 
@@ -54,9 +58,9 @@
   </pluginRepositories>
 
   <scm>
-    <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
-    <url>http://github.com/jenkinsci/${project.artifactId}-plugin</url>
-    <tag>HEAD</tag>
+    <connection>scm:git:git://github.com/${gitHubRepo}.git</connection>
+    <developerConnection>scm:git:git@github.com:${gitHubRepo}.git</developerConnection>
+    <url>http://github.com/${gitHubRepo}</url>
+    <tag>${scmTag}</tag>
   </scm>
 </project>
