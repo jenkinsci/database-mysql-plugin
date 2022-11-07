@@ -20,7 +20,7 @@
     <gitHubRepo>jenkinsci/database-mysql-plugin</gitHubRepo>
     <jenkins.version>2.235.1</jenkins.version>
     <java.level>8</java.level>
-    <database.version>1.7</database.version>
+    <database.version>166.vf8eb_e4c80a_5d</database.version>
   </properties>
 
   <licenses>
