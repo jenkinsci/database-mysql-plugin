@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.is;
 import hudson.util.Secret;
 import java.io.IOException;
 import org.jenkinsci.plugins.database.GlobalDatabaseConfiguration;
-import org.jenkinsci.plugins.database.mysql.MySQLDatabase;
 import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
 import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
@@ -16,7 +15,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @WithJenkins
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 public class MySQLDatabaseTest {
 
     public static final String TEST_IMAGE = "mysql:8.2.0";
