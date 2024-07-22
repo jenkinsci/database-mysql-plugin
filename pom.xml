@@ -20,7 +20,7 @@
     <jenkins.version>2.414.3</jenkins.version>
 
     <!-- Test dependencies version -->
-    <testcontainer.version>1.19.8</testcontainer.version>
+    <testcontainer.version>1.20.0</testcontainer.version>
 
   </properties>
 
