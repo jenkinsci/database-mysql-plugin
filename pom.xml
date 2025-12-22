@@ -22,7 +22,7 @@
     <jenkins.version>${jenkins.baseline}.3</jenkins.version>
 
     <!-- Test dependencies version -->
-    <testcontainer.version>1.21.3</testcontainer.version>
+    <testcontainer.version>1.21.4</testcontainer.version>
 
     <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
   </properties>
